@@ -9,6 +9,7 @@ import {Motion, MotionMode} from './../motion/motion';
 import {ModeHandler} from './modeHandler';
 import {DeleteOperator} from './../operator/delete';
 import {ChangeOperator} from './../operator/change';
+import {PasteOperator} from './../operator/paste';
 import {TextEditor} from './../textEditor';
 
 export class NormalMode extends Mode {
@@ -136,7 +137,14 @@ export class NormalMode extends Mode {
             return {}; 
         },
         "X" : async (m) => { return vscode.commands.executeCommand("deleteLeft"); },
-        "esc": async () => { return vscode.commands.executeCommand("workbench.action.closeMessages"); }
+        "esc": async () => { return vscode.commands.executeCommand("workbench.action.closeMessages"); },
+        "p": async (m) => {
+            m.changeMode(MotionMode.Cursor);
+            await new PasteOperator(this._modeHandler).run(m.position, m.position);
+            this.motion.left().move();
+            
+            return {};
+        }
     };
 
     private _modeHandler: ModeHandler;

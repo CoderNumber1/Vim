@@ -9,6 +9,7 @@ import { Operator } from './../operator/operator';
 import { DeleteOperator } from './../operator/delete';
 import { ModeHandler } from './modeHandler.ts';
 import { ChangeOperator } from './../operator/change';
+import { YankOperator } from './../operator/yank';
 
 export class VisualMode extends Mode {
     /**
@@ -35,7 +36,8 @@ export class VisualMode extends Mode {
             // simply allow the operators to say what mode they transition into.
             'd': new DeleteOperator(modeHandler),
             'x': new DeleteOperator(modeHandler),
-            'c': new ChangeOperator(modeHandler)
+            'c': new ChangeOperator(modeHandler),
+            'y': new YankOperator(modeHandler)
         };
     }
 
